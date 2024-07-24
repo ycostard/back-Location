@@ -7,4 +7,5 @@ const router = express.Router();
 
 router.get("/vehicules", authMiddleware, vehiculeController.getALLVehiculeByToken);
 router.post("/vehicules", authMiddleware, vehiculeController.createVehicule);
+router.delete("/vehicules/:id",authMiddleware, vehiculeController.deleteVehicule);
 module.exports = router;
