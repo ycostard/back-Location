@@ -1,4 +1,6 @@
 const reservationModel = require("../models/Reservation");
+const annonceModel = require("../models/Annonce");
+const MailService = require("../services/mail");
 
 const ReservationController = {
     async getAllReservationByToken(req, res) {
@@ -24,9 +26,16 @@ const ReservationController = {
           if (!id_annonce )
             return res.status(400).json({ message: "Veuillez fournir toutes les informations nécessaires." });
 
-    
-          const newReservation = await reservationModel.create(reservationData = { utilisateur_id: req.user.id, id_annonce });
-    
+          const annonce = await annonceModel.findById(id_annonce);
+
+          if (!annonce)
+            return res.status(404).json({ message: "Annonce non trouvé." });
+
+          const newReservation = await reservationModel.create(reservationData = { id_utilisateur: parseInt(req.user.id), id_annonce: parseInt(id_annonce) });
+
+          MailService.sendReservationRequest(annonce.vehicule.utilisateur.mail, `${annonce.vehicule.marque} ${annonce.vehicule.modele} ${annonce.vehicule.couleur}`, annonce.date_debut);
+          MailService.sendReservationConfirmation(req.user.email, `${annonce.vehicule.marque} ${annonce.vehicule.modele} ${annonce.vehicule.couleur}`, annonce.date_debut);
+
           return res
             .status(201)
             .json({ message: "Reservation enregistré avec succès." });

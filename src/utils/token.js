@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 
 // ExpireIn 3 days
 const generateAccessToken = (user) => {  
-  const accessToken = jwt.sign({ id: user.id, email: user.email, role: user.role }, process.env.SECRET_TOKEN, {
+  const accessToken = jwt.sign({ id: user.id, email: user.mail }, process.env.SECRET_TOKEN, {
     expiresIn: '3d',
   });
 
@@ -11,7 +11,7 @@ const generateAccessToken = (user) => {
 };
 
 const generateRefreshToken = (user) => {
-  const refreshToken = jwt.sign({ id: user.id, email: user.email, role: user.role }, process.env.SECRET_REFRESH_TOKEN, {
+  const refreshToken = jwt.sign({ id: user.id, email: user.mail }, process.env.SECRET_REFRESH_TOKEN, {
     expiresIn: '7d',
   });
 

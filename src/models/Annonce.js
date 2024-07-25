@@ -55,8 +55,12 @@ const Annonce = {
                 id,
             },
             include: {
-                vehicule: true,
-            },
+              vehicule: {
+                include: {
+                  utilisateur: true
+                }
+              }
+            }
         });
     },
 
@@ -68,8 +72,12 @@ const Annonce = {
             },
           },
           include: {
-            vehicule: true,
-          },
+            vehicule: {
+              include: {
+                utilisateur: true
+              }
+            }
+          }
         });
     },
 
