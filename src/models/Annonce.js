@@ -34,7 +34,11 @@ const Annonce = {
           date_creation: 'desc'
         },
         include: {
-          vehicule: true
+          vehicule: {
+            include: {
+              utilisateur: true
+            }
+          }
         }
       });
     },      
