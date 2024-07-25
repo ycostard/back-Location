@@ -11,6 +11,14 @@ const Vehicule = {
     });
   },
 
+  findAllByUtilisateurId(id) {
+    return prisma.vehicule.findMany({
+      where: {
+        utilisateur_id: id,
+      },
+    });
+  },
+
   create(vehiculeData) {
     return prisma.vehicule.create({
       data: vehiculeData,
@@ -21,10 +29,13 @@ const Vehicule = {
     return prisma.vehicule.findMany();
   },
 
-  delete() {
-    return prisma.vehicule.delete();
-  },
-
+  deleteById(id) {
+    return prisma.vehicule.delete({
+      where: {
+        id,
+      },
+    });
+  }
   
 };
 

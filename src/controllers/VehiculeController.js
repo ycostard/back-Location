@@ -1,19 +1,10 @@
-const Vehicule = require("../models/Vehicule");
 const vehiculeModel = require("../models/Vehicule");
 
 const VehiculeController = {
-  async getALLVehiculeByToken(req, res) {
+  async getAllVehiculesByToken(req, res) {
     try {
-      const { id } = req.params;
 
-      // Vérifie si l'identifiant de l'utilisateur est valide
-      if (!isValidVehiculeId(id)) {
-        return res.status(400).json({
-          message: "L'identifiant du vehicule n'est pas valide.",
-        });
-      }
-
-      const vehicule = await vehiculeModel.findById(parseInt(id));
+      const vehicule = await vehiculeModel.findAllByUtilisateurId(parseInt(req.user.id));
 
       return res.status(200).json({ vehicule });
     } catch (error) {
@@ -33,7 +24,7 @@ const VehiculeController = {
       if (!marque || !modele || !couleur || !kilometrage || !carburant || !photo )
         return res.status(400).json({ message: "Veuillez fournir toutes les informations nécessaires." });
 
-      const newVehicule = await Vehicule.create(vehiculeData = { utilisateur_id: req.user.id, marque, modele, couleur, kilometrage: parseInt(kilometrage), carburant, photo });
+      const newVehicule = await vehiculeModel.create(vehiculeData = { utilisateur_id: req.user.id, marque, modele, couleur, kilometrage: parseInt(kilometrage), carburant, photo });
 
       return res
         .status(201)
@@ -49,7 +40,9 @@ const VehiculeController = {
 
   async deleteVehicule(req, res) {
     try {
+
       const { id } = req.params;
+      
       if (!isValidVehiculeId(id)) {
         return res.status(400).json({
           message: "L'identifiant du vehicule n'est pas valide.",
@@ -64,11 +57,14 @@ const VehiculeController = {
           message: "Le véhicule n'existe pas.",
         });
       }
+
       if (deletedVehicule.utilisateur_id != req.user.id){
         return res.status(404).json({
           message: "Vous n'êtes pas autorisé",
         });
       }
+
+      await vehiculeModel.deleteById(parseInt(id));
   
       return res.status(200).json({ message: "Véhicule supprimé avec succès." });
     } catch (error) {
@@ -78,7 +74,6 @@ const VehiculeController = {
       });
     }
   }
-  
 
 };
 
