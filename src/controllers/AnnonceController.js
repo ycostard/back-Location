@@ -4,7 +4,7 @@ const { create } = require("../models/Vehicule");
 const AnnonceController = {
     async getAllAnnonces(req, res) {
         try {
-          let { offset, limit } = req.query;
+          let { offset, limit, search } = req.query;
     
           if (!offset || !limit) {
             offset = 0;
@@ -15,7 +15,10 @@ const AnnonceController = {
           const annonces = await annonceModel.findAllByoffsetAndLimit(
             offset,
             limit,
+            search
           );
+
+          if (search) totalCount = annonces.length;
     
           const output = {
             count: totalCount,
