@@ -1,4 +1,19 @@
 const vehiculeModel = require("../models/Vehicule");
+const multer = require("multer");
+const uuid = require("uuid");
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    // Spécifiez le dossier de destination où l'image sera enregistrée
+    cb(null, process.cwd()+"/src/img/");
+  },
+  filename: function (req, file, cb) {
+    // Ajoutez le suffixe unique au nom d'origine du fichier
+    cb(null, `${uuid.v4().split('-')[0]}-${file.originalname}`);
+  },
+});
+
+const upload = multer({ storage: storage });
 
 const VehiculeController = {
   async getAllVehiculesByToken(req, res) {
@@ -18,25 +33,36 @@ const VehiculeController = {
 
 
   async createVehicule(req, res) {
-    try {
-      const { marque, modele, couleur, kilometrage, carburant, photo } = req.body;
-
-      if (!marque || !modele || !couleur || !kilometrage || !carburant || !photo )
-        return res.status(400).json({ message: "Veuillez fournir toutes les informations nécessaires." });
-
-      const newVehicule = await vehiculeModel.create(vehiculeData = { utilisateur_id: req.user.id, marque, modele, couleur, kilometrage: parseInt(kilometrage), carburant, photo });
-
-      return res
-        .status(201)
-        .json({ message: "Vehicule enregistré avec succès." });
-    } catch (error) {
-      console.error(error);
-      return res.status(500).json({
-        message:
-          "Une erreur est survenue lors de l'enregistrement du vehicule.",
-      });
-    }
+    upload.single("photo")(req, res, async (err) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).json({
+          message: "Une erreur est survenue lors de l'upload de l'image.",
+        });
+      }
+      try {
+        const { marque, modele, couleur, kilometrage, carburant } = req.body;
+        const photo = req.file;
+  
+        if (!marque || !modele || !couleur || !kilometrage || !carburant || !photo )
+          return res.status(400).json({ message: "Veuillez fournir toutes les informations nécessaires." });
+  
+        const newVehicule = await vehiculeModel.create(vehiculeData = { utilisateur_id: req.user.id, marque, modele, couleur, kilometrage: parseInt(kilometrage), carburant, photo: photo.filename });
+  
+        return res
+          .status(201)
+          .json({ message: "Vehicule enregistré avec succès.", photo: photo.filename });
+      } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+          message:
+            "Une erreur est survenue lors de l'enregistrement du vehicule.",
+        });
+      }
+    },
+    );
   },
+    
 
   async deleteVehicule(req, res) {
     try {

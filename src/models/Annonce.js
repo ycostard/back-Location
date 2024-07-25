@@ -13,6 +13,9 @@ const Annonce = {
           orderBy: {
             date_creation: "desc",
           },
+            include: {
+                vehicule: true,
+            },
         });
       },
 

@@ -23,13 +23,13 @@ async function main() {
 
     // Ajouter des véhicules pour certains utilisateurs
     const vehicles = [
-        { utilisateur_id: createdUsers[0].id, marque: "Toyota", modele: "Corolla", couleur: "Bleu", kilometrage: 15000, carburant: "Essence", photo: "url/photo1.jpg" },
-        { utilisateur_id: createdUsers[1].id, marque: "Renault", modele: "Clio", couleur: "Rouge", kilometrage: 10000, carburant: "Diesel", photo: "url/photo2.jpg" },
-        { utilisateur_id: createdUsers[2].id, marque: "Peugeot", modele: "308", couleur: "Noir", kilometrage: 20000, carburant: "Essence", photo: "url/photo3.jpg" },
-        { utilisateur_id: createdUsers[3].id, marque: "Citroen", modele: "C3", couleur: "Blanc", kilometrage: 25000, carburant: "Diesel", photo: "url/photo4.jpg" },
-        { utilisateur_id: createdUsers[4].id, marque: "Ford", modele: "Fiesta", couleur: "Vert", kilometrage: 30000, carburant: "Essence", photo: "url/photo5.jpg" },
-        { utilisateur_id: createdUsers[5].id, marque: "BMW", modele: "X1", couleur: "Gris", kilometrage: 35000, carburant: "Diesel", photo: "url/photo6.jpg" },
-        { utilisateur_id: createdUsers[6].id, marque: "Audi", modele: "A3", couleur: "Bleu", kilometrage: 40000, carburant: "Essence", photo: "url/photo7.jpg" }
+        { utilisateur_id: createdUsers[0].id, marque: "Toyota", modele: "Corolla", couleur: "Bleu", kilometrage: 15000, carburant: "Essence", photo: "voiture1.png" },
+        { utilisateur_id: createdUsers[1].id, marque: "Renault", modele: "Clio", couleur: "Rouge", kilometrage: 10000, carburant: "Diesel", photo: "voiture2.jpg" },
+        { utilisateur_id: createdUsers[2].id, marque: "Peugeot", modele: "308", couleur: "Noir", kilometrage: 20000, carburant: "Essence", photo: "voiture3.jpg" },
+        { utilisateur_id: createdUsers[3].id, marque: "Citroen", modele: "C3", couleur: "Blanc", kilometrage: 25000, carburant: "Diesel", photo: "voiture4.jpg" },
+        { utilisateur_id: createdUsers[4].id, marque: "Ford", modele: "Fiesta", couleur: "Vert", kilometrage: 30000, carburant: "Essence", photo: "voiture5.jpg" },
+        { utilisateur_id: createdUsers[5].id, marque: "BMW", modele: "X1", couleur: "Gris", kilometrage: 35000, carburant: "Diesel", photo: "voiture6.jpg" },
+        { utilisateur_id: createdUsers[6].id, marque: "Audi", modele: "A3", couleur: "Bleu", kilometrage: 40000, carburant: "Essence", photo: "voiture7.jpg" }
     ];
 
     const createdVehicles = [];
