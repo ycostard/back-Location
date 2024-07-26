@@ -6,9 +6,9 @@ const ReservationController = {
     async getAllReservationByToken(req, res) {
       try {
   
-        const reservation = await reservationModel.findAllByUtilisateurId(parseInt(req.user.id));
+        const reservations = await reservationModel.findAllByUtilisateurId(parseInt(req.user.id));
   
-        return res.status(200).json({ reservation });
+        return res.status(200).json({ reservations });
       } catch (error) {
         console.error(error);
         return res.status(500).json({
@@ -30,7 +30,7 @@ const ReservationController = {
 
           if (!annonce)
             return res.status(404).json({ message: "Annonce non trouvé." });
-
+          
           const newReservation = await reservationModel.create(reservationData = { id_utilisateur: parseInt(req.user.id), id_annonce: parseInt(id_annonce) });
 
           MailService.sendReservationRequest(annonce.vehicule.utilisateur.mail, `${annonce.vehicule.marque} ${annonce.vehicule.modele} ${annonce.vehicule.couleur}`, annonce.date_debut);

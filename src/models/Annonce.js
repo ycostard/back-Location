@@ -59,7 +59,7 @@ const Annonce = {
                 include: {
                   utilisateur: true
                 }
-              }
+              },
             }
         });
     },
@@ -76,7 +76,12 @@ const Annonce = {
               include: {
                 utilisateur: true
               }
-            }
+            },
+            reservations: {
+              include: {
+                utilisateur: true
+              }
+            } 
           }
         });
     },
@@ -88,7 +93,6 @@ const Annonce = {
             },
         });
     }
-    
 };
 
 module.exports = Annonce;

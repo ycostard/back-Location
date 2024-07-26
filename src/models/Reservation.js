@@ -15,8 +15,19 @@ const Reservation = {
     findAllByUtilisateurId(id) {
       return prisma.reservation.findMany({
         where: {
-          utilisateur_id: id,
+          id_utilisateur: id,
         },
+        include: {
+          annonce: {
+            include: {
+              vehicule: {
+                include: {
+                  utilisateur: true
+                }
+              }
+            }
+          }
+        }
       });
     },
   
